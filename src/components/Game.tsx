@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import words from "../constants/words";
 import { IBoard, IBox } from "../types/board";
 import { IKeyStates } from "../types/keyboard";
 import Board from "./Board";
@@ -7,8 +8,18 @@ import Keyboard from "./Keyboard";
 const ROW_NUM = 6;
 const COL_NUM = 5;
 
-let defaultBoard: IBoard = [];
+const getState = (gameState: "win" | "lost" | "") => {
+  switch (gameState) {
+    case "win":
+      return <div>🙌 باریکلا</div>;
+    case "lost":
+      return <div>😕 باختی که</div>;
+    default:
+      return <div></div>;
+  }
+};
 
+let defaultBoard: IBoard = [];
 for (let i = 0; i < ROW_NUM; i++) {
   defaultBoard.push([]);
   for (let j = 0; j < COL_NUM; j++) {
@@ -16,7 +27,9 @@ for (let i = 0; i < ROW_NUM; i++) {
   }
 }
 
-const correct = "اسمان";
+const correct = words[Math.floor(Math.random() * words.length)];
+
+console.log("correct", correct);
 
 const Game: React.FC = () => {
   const [gameState, setGameState] = useState<"win" | "lost" | "">("");
@@ -27,15 +40,12 @@ const Game: React.FC = () => {
 
   const allowSubmit = activeBoxIndex === COL_NUM;
 
-  if (gameState) console.log(gameState);
-
   useEffect(() => {
     if (activeRow === ROW_NUM && gameState === "") setGameState("lost");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeRow]);
 
   const handleKeyboardClick = async (value: string) => {
-    console.log(value);
     if (gameState) return;
     const newBoard = [...board];
     if (value === "Enter") {
@@ -77,7 +87,7 @@ const Game: React.FC = () => {
       }
       modifiedLetters.push({ ...letter, state });
     }
-
+    console.log("modifiedLetters", modifiedLetters);
     const finalLetters: IBox[] = [];
     for (let letter of modifiedLetters) {
       if (letter.state === "C") {
@@ -88,7 +98,7 @@ const Game: React.FC = () => {
       const remainedIndex = remainedWords.indexOf(letter.value);
       let state: IBox["state"] = "W";
       if (remainedIndex === -1) {
-        newKeysState = { ...newKeysState, [letter.value]: "W" };
+        newKeysState = { [letter.value]: "W", ...newKeysState };
       } else {
         state = "WP";
         newKeysState = { ...newKeysState, [letter.value]: "C" };
@@ -105,6 +115,9 @@ const Game: React.FC = () => {
   return (
     <div>
       <Board board={board} />
+      <div className="flex justify-center font-fa font-bold p-4">
+        {getState(gameState)}
+      </div>
       <Keyboard
         states={keysState}
         activeSubmit={allowSubmit}

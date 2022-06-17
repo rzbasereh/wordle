@@ -20,7 +20,7 @@ const Keyboard: React.FC<IProps> = ({ states, onClick, activeSubmit }) => {
     <div className="flex justify-center ">
       <div className="rounded-lg flex flex-col gap-2 bg-slate-300 p-2">
         {kayLines.map((kayLine, index) => (
-          <div className="flex justify-center gap-2">
+          <div key={index} className="flex justify-center gap-2">
             {index === 2 && (
               <Key size="lg" onClick={() => (onClick ? onClick("Delete") : {})}>
                 <DeleteIcon
@@ -29,8 +29,9 @@ const Keyboard: React.FC<IProps> = ({ states, onClick, activeSubmit }) => {
                 />
               </Key>
             )}
-            {kayLine.map((key) => (
+            {kayLine.map((key, keyIdx) => (
               <Key
+                key={keyIdx}
                 state={states[key]}
                 onClick={() => (onClick ? onClick(key) : {})}
               >
