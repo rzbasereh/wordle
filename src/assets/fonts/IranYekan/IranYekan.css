@@ -1,0 +1,20 @@
+@font-face {
+  font-family: IranYekan;
+  font-weight: 700;
+  font-style: normal;
+  src: url('./IRANYekanBoldMsn.ttf');
+}
+
+@font-face {
+  font-family: IranYekan;
+  font-weight: 500;
+  font-style: normal;
+  src: url('./IRANYekanMediumMsn.ttf');
+}
+
+@font-face {
+  font-family: IranYekan;
+  font-weight: 400;
+  font-style: normal;
+  src: url('./IRANYekanRegularMsn.ttf');
+}
