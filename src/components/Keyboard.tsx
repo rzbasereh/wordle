@@ -12,9 +12,10 @@ const kayLines = [
 interface IProps {
   states: IKeyStates;
   onClick?: (value: string) => void;
+  activeSubmit?: boolean;
 }
 
-const Keyboard: React.FC<IProps> = ({ states, onClick }) => {
+const Keyboard: React.FC<IProps> = ({ states, onClick, activeSubmit }) => {
   return (
     <div className="flex justify-center ">
       <div className="rounded-lg flex flex-col gap-2 bg-slate-300 p-2">
@@ -40,6 +41,7 @@ const Keyboard: React.FC<IProps> = ({ states, onClick }) => {
               <Key
                 size="lg"
                 color="blue"
+                disabled={!activeSubmit}
                 onClick={() => (onClick ? onClick("Enter") : {})}
               >
                 <CheckIcon size={20} />

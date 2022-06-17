@@ -1,18 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { IBoard } from "../types/board";
 import Box from "./Box";
-
-const ROW_NUM = 6;
-const COL_NUM = 5;
-
-let defaultBoard: IBoard = [];
-
-for (let i = 0; i < ROW_NUM; i++) {
-  defaultBoard.push([]);
-  for (let j = 0; j < COL_NUM; j++) {
-    defaultBoard[i].push({ value: "", state: "" });
-  }
-}
 
 interface IProps {
   board: IBoard;

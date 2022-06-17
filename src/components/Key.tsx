@@ -8,16 +8,26 @@ interface IProps {
   color?: "blue";
   state?: IKeyState;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const Key: React.FC<IProps> = ({ children, size, color, state, onClick }) => {
+const Key: React.FC<IProps> = ({
+  children,
+  size,
+  color,
+  state,
+  onClick,
+  disabled,
+}) => {
   return (
     <button
       className={clsx(
         "font-fa rounded-lg flex justify-center items-center cursor-pointer shadow h-12",
         size === "lg" ? "w-14" : "w-8",
         color === "blue"
-          ? "text-white bg-blue-500 hover:bg-blue-600"
+          ? disabled
+            ? "text-white bg-blue-500 opacity-50 pointer-events-none"
+            : "text-white bg-blue-500 hover:bg-blue-600"
           : state === "W"
           ? "bg-red-500 text-white"
           : state === "C"
@@ -25,6 +35,7 @@ const Key: React.FC<IProps> = ({ children, size, color, state, onClick }) => {
           : "bg-slate-100 hover:bg-slate-200 active:shadow-none"
       )}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
